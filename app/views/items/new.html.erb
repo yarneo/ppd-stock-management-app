@@ -1,0 +1,24 @@
+<div class="headline">&nbsp;Adding Items</div>
+</br>
+<%= form_for @item do |f| %>
+
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <%= f.fields_for :products do |builder| %>
+          <%= render :partial => 'products/form_mult',
+             :locals => {:f => builder} %>
+  <% end %>
+  <p align=center><%= f.submit "Submit" %></p>
+<% end %>
+

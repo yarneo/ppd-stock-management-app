@@ -1,0 +1,19 @@
+<%= form.fields_for :quantities do |quant| %>
+<td class="form_field">
+    <%= quant.label :storage %><br />
+</td><td align=right>
+    <%= quant.select :storage, options_from_collection_for_select(@storages, "id", "name", params[:storage])%>
+</td></tr><tr><td class="form_field">
+    <%= quant.label :amount %><br />
+</td><td align=right>
+    <%= quant.number_field :amount %>
+ <% unless quant.object.nil? || quant.object.new_record? %>
+</td></tr><tr><td class="form_field">
+      <%= quant.label :_destroy, 'Remove:' %>
+      </td><td align=right>
+      <%= quant.check_box :_destroy %>
+</td>
+
+<% end %>
+<% end %>
+

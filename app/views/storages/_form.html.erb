@@ -1,0 +1,20 @@
+<%= form_for(@storage) do |f| %>
+  <% if @storage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@storage.errors.count, "error") %> prohibited this storage from being saved:</h2>
+
+      <ul>
+      <% @storage.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
+    <%= f.label :name %><br />
+</td><td align=right>
+    <%= f.text_field :name %>
+    </td></tr><tr><td colspan=2 align=center>
+    <%= f.submit %>
+</td></tr></table>
+<% end %>

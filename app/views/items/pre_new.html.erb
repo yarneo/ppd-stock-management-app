@@ -1,0 +1,15 @@
+<div class="headline">&nbsp;Adding Items</div>
+</br>
+<%= form_tag new_item_path, :class => "form", :method => 'get' do %>
+<table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
+  	How many Items to Add?
+</td><td align=right>
+    <%= number_field_tag 'amount', 1, :in => 1...100 %>
+</td></tr><tr><td class="form_field">
+    To which storage?
+</td><td align=right>
+    <%= select_tag "storage", options_from_collection_for_select(@storages, "id", "name") %>
+</td></tr><tr><td colspan=2 align=center>
+    <%= submit_tag "Next", :name => 'submitted' %>
+</td></tr></table>
+<% end %>

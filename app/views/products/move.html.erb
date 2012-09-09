@@ -1,0 +1,30 @@
+<div class="headline">&nbsp;Moving Items</div>
+</br>
+<%= form_tag move_multiple_products_path, :method => :put do %>
+<table align=center class="bordered subtopic" width=400>
+  <tr>
+    <th>Move?</th>
+    <th>Name</th>
+    <th>Storage</th>
+    <th>Amount</th>
+    <th>How much To Move</th>
+  </tr>
+  <% for quantity in @quantities %>
+  <tr bgcolor=#d7e4d9>
+  <td><%= check_box_tag "quantity_ids[]", quantity.id %></td>
+    <%= fields_for "quantities[]", quantity do |f| %>
+      <td><%=h quantity.product.name %></td>
+      <td><%=h quantity.storage %></td>
+      <td><%=h quantity.amount %></td>
+<%= f.error_messages :object_name => "quantity" %>
+  <td><%= f.text_field :amount %></td>
+<% end %>
+</tr>
+  <% end %>
+  </table>
+  <%= hidden_field_tag "from_storage" , params[:from_storage].to_s %>
+  <%= hidden_field_tag "to_storage" , params[:to_storage].to_s %>
+ <div align=center> 
+  <%= submit_tag "Move Checked From Storage " + params[:from_storage].to_s + " To Storage " + params[:to_storage].to_s %>
+</div>
+<% end %>

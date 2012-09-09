@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PPD Storage Managment</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag 'jquery-1.8.0.min.js', 'jquery-ui-1.8.23.custom.min.js', 'autocomplete-rails.js', 'rails.js'  %>
+  <%= stylesheet_link_tag 'jquery-ui-1.8.23.custom.css' %>
+
+  <%= csrf_meta_tags %>
+</head>
+<body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" background="/assets/bg.png" style="height: 100%;">
+<table bgcolor="#B7C9B9" align=center cellspacing=0 cellpadding=0 border="0" style="border-width: 1px; border-color:#000000;
+border-style: solid;" width=65% height=800><tr  bgcolor="#333333"><td  bgcolor="#333333">
+<%= image_tag("ppd.jpg", :alt => "logo") %>
+</td>
+<td align=center>
+<div id="user_nav">
+  <% if current_user %><font color=blue>
+    <div class="welcome">Welcome <%= current_user.username %></div>
+  </font>
+  <% else %>
+  <%= render :file => "sessions/new" %>
+  <% end %>
+</div>
+
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<% end %>
+
+</td>
+</tr>
+<tr><td colspan=2>
+	<div id='cssmenu'>
+<ul>
+   <li class="<%= is_active?("index") if params[:controller] == "products" %>"><%=link_to "Show Items", products_path%></li></li>
+   <li class="<%= "active" if params[:controller] == "items" %>"><%=link_to "Add Items", items_pre_new_path%></li>
+   <li class="<%= "active" if ( current_page?(products_pre_move_path) or current_page?(products_move_path) ) %>"><%=link_to "Move Items", products_pre_move_path%></li>
+   <li class="<%= "active" if params[:controller] == "storages" %>"><%=link_to "Storages", storages_path%></li>
+   <li>	<%=link_to "Logout", log_out_path%></li>
+</ul>
+</div>
+</td></tr>
+<tr><td valign=top height=100% colspan=2></br>
+<%= yield %>
+</td></tr></table>
+
+</body>
+</html>

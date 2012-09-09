@@ -1,0 +1,35 @@
+/* ================================================================ 
+This copyright notice must be untouched at all times.
+
+The original version of this stylesheet and the associated (x)html
+is available at http://www.cssmenus.co.uk
+Copyright (c) 2009- Stu Nicholls. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any 
+way to fit your requirements.
+=================================================================== */
+#menuContainer {width:80%; position:relative; left:0;  overflow:hidden; background:url(ulback.gif) repeat-x;}
+#menu {padding:0; margin:0; list-style:none; float:left; height:40px; position:relative; left:50%;}
+#menu li {float:left; position:relative; right:50%; margin:0 2px;}
+#menu li a {display:block; height:40px; line-height:40px; padding:0 15px 0 0; float:left; color:#fff; text-decoration:none;}
+#menu li a b {display:block; height:40px; float:left; padding:0 0 0 15px; cursor:pointer;}
+#menu li a:hover, 
+.home #menu li#home a,
+.single #menu li#single a,
+.dropdown #menu li#dropdown a,
+.dropline #menu li#dropline a,
+.flyout #menu li#flyout a,
+.support #menu li#support a,
+.contact #menu li#contact a
+{background:url(button.png) no-repeat right top; line-height:36px;}
+#menu li a:hover b,
+.home #menu li#home a b,
+.single #menu li#single a b,
+.dropdown #menu li#dropdown a b,
+.dropline #menu li#dropline a b,
+.flyout #menu li#flyout a b,
+.support #menu li#support a b,
+.contact #menu li#contact a b
+{background:url(button.png) no-repeat left top; line-height:36px;}
+
+body { padding:20px 0px; font:12px Verdana, Geneva, sans-serif;
+ }

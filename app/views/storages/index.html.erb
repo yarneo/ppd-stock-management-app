@@ -1,0 +1,20 @@
+<div class="headline">&nbsp;Listing Storages</div>
+</br>
+<table align=center class="bordered subtopic" width=400>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+<% @storages.each do |storage| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= storage.id %></td>
+    <td><%= storage.name %></td>
+    <td><%= link_to 'Destroy', storage, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br /><div align=center><b>
+<%= link_to 'New Storage', new_storage_path , :class => "button"%></b>
+</div>

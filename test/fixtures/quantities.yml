@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  storage: 1
+  amounth: 1
+  product: 
+
+two:
+  name: MyString
+  storage: 1
+  amounth: 1
+  product: 
