@@ -224,7 +224,7 @@ textarea:focus {
 .gradientBoxesWithOuterShadows { 
 border: 1px solid #5c6f91;
 height: 200px;
-width: 450px; 
+width: 550px; 
 padding: 20px;
 background-color: white; 
 
@@ -240,5 +240,5 @@ border-radius: 7px;
 /* gradients */
 background: -webkit-gradient(linear, left top, left bottom, 
 color-stop(0%, #d7e4d9), color-stop(15%, #d7e4d9), color-stop(100%, #ffffff)); 
-background: -moz-linear-gradient(top, white 0%, white 55%, #d7e4d9 130%); 
+background: -moz-linear-gradient(top, #d7e4d9 0%, #d7e4d9 10%, #ffffff 130%); 
 }

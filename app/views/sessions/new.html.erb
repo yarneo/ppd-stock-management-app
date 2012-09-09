@@ -1,11 +1,11 @@
 <%= form_tag sessions_path do %>
-<table cellspacing=0 cellpadding=0 border=0 align=center>
-	<tr>
-    <td class="form_field2"><%= label_tag :username %></td>
-    <td>&nbsp;&nbsp;<%= text_field_tag :username, params[:username] %></td>
-	</tr><tr>
-    <td class="form_field2"><%= label_tag :password %></td>
-    <td>&nbsp;&nbsp;<%= password_field_tag :password %></td>
-  	<td class="button"><%= submit_tag "Log in" %></td>
+<table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
+	<%= label_tag :username %></td>
+    </td><td align=right><%= text_field_tag :username, params[:username] %>
+</td></tr><tr><td class="form_field">
+    <%= label_tag :password %>
+    </td><td align=right>
+<%= password_field_tag :password %>
+    </td></tr><tr><td colspan=2 align=center><%= submit_tag "Log in" %></td>
   </tr></table>
 <% end %>
