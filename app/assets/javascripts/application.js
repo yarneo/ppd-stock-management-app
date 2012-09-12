@@ -14,4 +14,9 @@
 //= require jquery_ujs
 //= require_tree .
 //= require jquery-ui
-//= require autocomplete-rails
+//= require chosen-jquery
+
+jQuery(function($){
+    $(".chzn-select").chosen({no_results_text: "No results matched"});
+
+});

@@ -1,0 +1,11 @@
+<div class="headline">&nbsp;Removing Stock</div>
+&nbsp;<%= flash[:notice] if flash[:notice] %>
+<%= form_tag products_remove_path, :method => 'get' do %>
+<table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
+  	From which Storage to remove stock?
+</td><td align=right>
+    <%= select_tag "from_storage", options_from_collection_for_select(@storages, "id", "name") %>
+    </td></tr><tr><td colspan=2 align=center>
+    <%= submit_tag "Next", :name => 'submitted' %>
+</td></tr></table>
+<% end %>

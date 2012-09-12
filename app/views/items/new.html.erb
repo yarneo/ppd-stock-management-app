@@ -1,6 +1,7 @@
-<div class="headline">&nbsp;Adding Items</div>
+<div class="headline">&nbsp;Adding Stock</div>
 </br>
-<%= form_for @item do |f| %>
+<div align=center>
+<%= form_for @item  do |f| %>
 
   <% if @item.errors.any? %>
     <div id="error_explanation">
@@ -14,7 +15,7 @@
     </div>
   <% end %>
 
-
+</div>
   <%= f.fields_for :products do |builder| %>
           <%= render :partial => 'products/form_mult',
              :locals => {:f => builder} %>

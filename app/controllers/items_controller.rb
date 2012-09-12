@@ -35,11 +35,14 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = Item.new
-
     @amount_form = params['amount']
+    @storage_form = params['storage']
     @amount_form.to_i.times do
       product = @item.products.build
       product.quantities.build
+      product.quantities.each do |quant|
+        quant.storage = @storage_form
+      end
     end
 
     respond_to do |format|
@@ -66,13 +69,23 @@ class ItemsController < ApplicationController
     @prods_hash = params[:item][:products_attributes]
 
     @prods_hash.keys.each do |key|
-      next if @prods_hash[key][:name].to_s == "" 
+      next if ( @prods_hash[key][:name].to_s == "" and @prods_hash[key][:supplier_code].to_s == "" and @prods_hash[key][:ppd_code].to_s == "" )
       @quants_hash = @prods_hash[key][:quantities_attributes]
       
       @quants_hash.keys.each do |key2|
-        @find_prod = Product.where(:name => @prods_hash[key][:name])
-        if @find_prod.first != nil         
-          @quants = @find_prod.first.quantities
+        if @prods_hash[key][:name] != ""
+          @right_param = @prods_hash[key][:name]
+        elsif @prods_hash[key][:supplier_code] != ""
+          @right_param = @prods_hash[key][:supplier_code]
+        elsif @prods_hash[key][:ppd_code] != ""
+          @right_param = @prods_hash[key][:ppd_code]
+        else
+          #We are fucked, contact site admin
+        end
+        @find_prod = Product.find(:first, :conditions => ["id = ?",@right_param])
+        if @find_prod != nil         
+          @quants = @find_prod.quantities
+          #if quants is empty or nil? (added product no quants yet) will the for loop work? Update: I think its ok
           @quants.each do |q|
             if q.storage == @quants_hash[key2][:storage].to_i
               q.amount += @quants_hash[key2][:amount].to_i
@@ -81,24 +94,25 @@ class ItemsController < ApplicationController
               return
             end
           end
+          @new_quantity = @find_prod.quantities.build(:storage => @quants_hash[key2][:storage].to_i, :amount => @quants_hash[key2][:amount].to_i)
+          @new_quantity.save
+        else
+          #we are fucked
+          We are fucked! If you have reached here please contact someone.
+          redirect_to(products_path)
+          return
         end
-          @pp = Product.new(@prods_hash[key])
-          @pp.save
+          #@pp = Product.new(@prods_hash[key])
+          #@pp.save
       end
     end
     redirect_to(products_path)
     return
-
-
-
-
       else
         format.html { render :action => "new" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
       end
     end
-
-
   end
 
   # PUT /items/1
@@ -129,3 +143,4 @@ class ItemsController < ApplicationController
     end
   end
 end
+

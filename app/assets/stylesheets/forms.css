@@ -39,6 +39,7 @@ table {
     padding: 10px;
     text-align: left;  
     font-weight:bold; 
+    font-size: 12px;
 }
 
 .subtopic th {
@@ -241,4 +242,20 @@ border-radius: 7px;
 background: -webkit-gradient(linear, left top, left bottom, 
 color-stop(0%, #d7e4d9), color-stop(15%, #d7e4d9), color-stop(100%, #ffffff)); 
 background: -moz-linear-gradient(top, #d7e4d9 0%, #d7e4d9 10%, #ffffff 130%); 
+}
+
+
+
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(up_arrow.gif);
+}
+
+.pretty th .desc {
+  background-image: url(down_arrow.gif);
 }

@@ -1,5 +1,6 @@
 
 class ProductsController < ApplicationController
+  helper_method :sort_column, :sort_direction, :sort_column2
   before_filter :logged_in?
   autocomplete :product, :name,:full => true
   # GET /products
@@ -32,7 +33,9 @@ class ProductsController < ApplicationController
   # PUT /products/1.json
   def update
     @product = Product.find(params[:id])
-
+    if params[:product][:min_quantity].blank?
+      params[:product][:min_quantity] = -1
+    end
     respond_to do |format|
       if @product.update_attributes(params[:product])
         format.html { redirect_to @product, :notice => 'Product was successfully updated.' }
@@ -51,7 +54,7 @@ class ProductsController < ApplicationController
     @product.destroy
 
     respond_to do |format|
-      format.html { redirect_to products_url }
+      format.html { redirect_to products_info_path }
       format.json { head :no_content }
     end
   end
@@ -122,5 +125,128 @@ def move_multiple
   flash[:notice] = "Moved the products!"
   redirect_to products_path
 end
+
+
+  # GET /items/new
+  # GET /items/new.json
+  def new
+    @product = Product.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render :json => @item }
+    end
+  end
+
+
+def pre_remove
+end
+
+def remove
+    @from_storage = params[:from_storage]
+
+    @quantities = Quantity.where(:storage => params[:from_storage])
+    @quantities.sort! { |a,b| a.product.name <=> b.product.name }
+    respond_to do |format|
+      format.html
+      format.json { render :json => @products }
+    end
+end
+
+
+def remove_multiple
+  if params[:quantity_ids] == nil
+    redirect_to products_pre_remove_path, :notice => "You haven't checked any product!"
+    return
+  end
+  @quantities = Quantity.find(params[:quantity_ids])
+  @quantities.each do |quantity|
+    if params[:quantities][quantity.id.to_s][:amount].to_i > quantity.amount
+      redirect_to products_pre_remove_path, :notice => "Cant remove more than the current amount!"
+      return
+    elsif params[:quantities][quantity.id.to_s][:amount].to_i == 0
+    redirect_to products_pre_remove_path, :notice => "You can only enter numbers > 0 in the amount field!"
+    return
+    end
+    if params[:quantities][quantity.id.to_s][:amount].to_i == quantity.amount
+      quantity.destroy
+    else
+      amount_to_leave = quantity.amount - params[:quantities][quantity.id.to_s][:amount].to_i
+      quantity.update_attribute(:amount, amount_to_leave)
+    end
+  end
+  flash[:notice] = "Removed the stock!"
+  redirect_to products_path
+end
+
+
+
+  def create
+    @product = Product.new(params[:product])
+    if params[:product][:name].blank? and params[:product][:ppd_code].blank? and params[:product][:supplier_code].blank? 
+      redirect_to(products_path)
+      return
+    end
+    if params[:product][:min_quantity].blank?
+      @product.min_quantity = -1
+    end
+    respond_to do |format|
+      if @product.save
+        format.html { redirect_to products_info_path, :notice => 'Product was successfully created.' }
+        format.json { render :json => @product, :status => :created, :location => @product }
+      else
+        format.html { render :action => "new" }
+        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def info
+    @products = Product.order(sort_column2 + " " + sort_direction)
+    @good_items = []
+    @bad_items = []
+    @products.each do |prod|
+      if prod.min_quantity != nil
+        temp_sum = 0
+        prod.quantities.each do |quant|
+          if Storage.find(quant.storage).name.downcase != "packing room"
+            temp_sum += quant.amount
+          end
+        end
+        if temp_sum >= prod.min_quantity
+          @good_items << prod
+        else
+          @bad_items << prod
+        end
+      end
+    end
+    @final_products = @bad_items + @good_items
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => @products }
+    end
+  end
+
+private
+
+ def sort_column
+    if params[:sort] == "amount" or params[:sort] == "products.ppd_code" or params[:sort] == "products.supplier_code"
+      params[:sort]
+    else
+      "products.name"
+    end
+  end
+
+ def sort_column2
+    if params[:sort] == "ppd_code" or params[:sort] == "supplier_code" or params[:sort] == "size"
+      params[:sort]
+    else
+      "name"
+    end
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 
 end

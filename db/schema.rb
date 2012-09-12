@@ -19,9 +19,13 @@ ActiveRecord::Schema.define(:version => 20120907153419) do
 
   create_table "products", :force => true do |t|
     t.string   "name"
+    t.string   "supplier_code"
+    t.string   "ppd_code"
+    t.string   "size"
+    t.integer  "min_quantity"
     t.integer  "item_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "products", ["item_id"], :name => "index_products_on_item_id"

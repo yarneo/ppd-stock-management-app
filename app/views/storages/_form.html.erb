@@ -1,4 +1,5 @@
 <%= form_for(@storage) do |f| %>
+<div align=center>
   <% if @storage.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@storage.errors.count, "error") %> prohibited this storage from being saved:</h2>
@@ -10,6 +11,7 @@
       </ul>
     </div>
   <% end %>
+</div>
 <table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
     <%= f.label :name %><br />
 </td><td align=right>

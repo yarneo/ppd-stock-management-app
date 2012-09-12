@@ -6,4 +6,6 @@ module ProductsHelper
   storage_items = Quantity.where(:storage => storage_num)
   return storage_items
   end
+
+  
 end

@@ -8,6 +8,13 @@ Dada::Application.routes.draw do
   match "/products/pre_move", :to => 'products#pre_move'
 
   match "/products/move",  :to => 'products#move'
+
+  match "/products/pre_remove", :to => 'products#pre_remove'
+
+  match "/products/remove",  :to => 'products#remove'
+
+  match "/products/info",  :to => 'products#info'
+
   resources :items
 
   resources :storages
@@ -17,6 +24,7 @@ Dada::Application.routes.draw do
 resources :products do
     collection do
     put 'move_multiple'
+    put 'remove_multiple'
     end
   get :autocomplete_product_name, :on => :collection
   resources :quantities

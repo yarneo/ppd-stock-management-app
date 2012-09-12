@@ -1,4 +1,4 @@
-<% @product.quantities.build %>
+
 <div align=center>
 <%= form_for @product do |new_prod| %>
   <% if @product.errors.any? %>
@@ -15,22 +15,22 @@
 </div>
 <table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center>
   <tr><td class="form_field">
-    <%= new_prod.label :name %>
+    <%= new_prod.label :name %><br />
 </td><td align=right>
     <%= new_prod.text_field :name %>
 </td></tr>
   <tr><td class="form_field">
-    <%= new_prod.label :size %>
+    <%= new_prod.label :size %><br />
 </td><td align=right>
     <%= new_prod.text_field :size %>
 </td></tr>
   <tr><td class="form_field">
-    <%= new_prod.label :ppd_code %>
+    <%= new_prod.label :ppd_code %><br />
 </td><td align=right>
     <%= new_prod.text_field :ppd_code %>
 </td></tr>
   <tr><td class="form_field">
-    <%= new_prod.label :supplier_code %>
+    <%= new_prod.label :supplier_code %><br />
 </td><td align=right>
     <%= new_prod.text_field :supplier_code %>
 </td></tr>
@@ -40,6 +40,9 @@
     <%= new_prod.text_field :min_quantity %>
 </td></tr>
 <tr><td colspan=2><i>If you leave the Minimum Quantity field blank, it will be assumed it is not important for you</i></td></tr>
+      <%= render :partial => 'quantities/form',
+             :locals => {:form => new_prod} %>
+
 <tr><td colspan=2 align=center>
     <%= new_prod.submit %>
 </td></tr></table>

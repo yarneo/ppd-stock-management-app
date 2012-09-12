@@ -1,13 +1,13 @@
-<div class="headline">&nbsp;Moving Items</div>
-</br> 
-<%= form_tag move_multiple_products_path, :method => :put do %>
+<div class="headline">&nbsp;Removing Stock</div>
+</br>
+<%= form_tag remove_multiple_products_path, :method => :put do %>
 <table align=center class="bordered subtopic" width=400>
   <tr>
     <th>Move?</th>
     <th>Name</th>
     <th>Storage</th>
     <th>Amount</th>
-    <th>How much To Move</th>
+    <th>How much To Remove</th>
   </tr>
   <% for quantity in @quantities %>
   <tr bgcolor=#d7e4d9>
@@ -23,9 +23,7 @@
   <% end %>
   </table>
   <%= hidden_field_tag "from_storage" , params[:from_storage].to_s %>
-  <%= hidden_field_tag "to_storage" , params[:to_storage].to_s %>
  <div align=center> 
-  <% @temp = Storage.find(params[:to_storage]).name %>
-  <%= submit_tag "Move Checked to Storage " + @temp %>
+  <%= submit_tag "Remove Checked From Storage" %>
 </div>
 <% end %>

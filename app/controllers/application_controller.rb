@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def init_globals
-	@storages = Storage.all
+	@storages = Storage.order("name")
 	@storage_id = 0
   end
 

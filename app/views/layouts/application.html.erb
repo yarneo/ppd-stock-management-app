@@ -8,7 +8,7 @@
 </head>
 <body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" background="/assets/bg.png" style="height: 100%;">
 <table bgcolor="#B7C9B9" align=center cellspacing=0 cellpadding=0 border="0" style="border-width: 1px; border-color:#000000;
-border-style: solid;" width=65% height=800><tr  bgcolor="#333333"><td  bgcolor="#333333">
+border-style: solid;" width=90% height=800><tr  bgcolor="#333333"><td  bgcolor="#333333">
 <%= image_tag("ppd.jpg", :alt => "logo") %>
 </td>
 <td align=center>
@@ -29,17 +29,32 @@ border-style: solid;" width=65% height=800><tr  bgcolor="#333333"><td  bgcolor="
 <tr><td colspan=2>
 	<div id='cssmenu'>
 <ul>
-   <li class="<%= is_active?("index") if params[:controller] == "products" %>"><%=link_to "Show Items", products_path%></li></li>
-   <li class="<%= "active" if params[:controller] == "items" %>"><%=link_to "Add Items", items_pre_new_path%></li>
-   <li class="<%= "active" if ( current_page?(products_pre_move_path) or current_page?(products_move_path) ) %>"><%=link_to "Move Items", products_pre_move_path%></li>
-   <li class="<%= "active" if params[:controller] == "storages" %>"><%=link_to "Storages", storages_path%></li>
+  <!--TODO: Fix show items page to show more info, do search for the codes also. Vi
+        Add Remove Stock only from packaging room Vi
+        Do Order by in Main Items page
+        Products Page Vi, have low quantity warnings on top Vi, and products list with availability to edit a product. Vi
+        Add Page Size Vi, and Suppliers Time till delivery and calculations to calculate if we need more stock.-->
+   <li class="<%= is_active?("index") if params[:controller] == "products" %>">
+    <%=link_to "Show Items", products_path%></li>
+   <li class="<%= "active" if is_active?("info") %>">
+    <%=link_to "Products", products_info_path%></li>  
+   <li class="<%= "active" if params[:controller] == "items" %>">
+    <%=link_to "Add Stock", items_pre_new_path%></li>
+   <li class="<%= "active" if ( current_page?(products_pre_move_path) or current_page?(products_move_path) ) %>">
+    <%=link_to "Move Items", products_pre_move_path%></li>
+   <li class="<%= "active" if ( current_page?(products_pre_remove_path) or current_page?(products_remove_path) ) %>">
+    <%=link_to "Remove Stock", products_pre_remove_path%></li> 
+   <li class="<%= "active" if current_page?(new_product_path) %>">
+    <%=link_to "Add New Product", new_product_path%></li>
+   <li class="<%= "active" if params[:controller] == "storages" %>">
+    <%=link_to "Storages", storages_path%></li>
    <li>	<%=link_to "Logout", log_out_path%></li>
 </ul>
 </div>
 </td></tr>
 <tr><td valign=top height=100% colspan=2></br>
 <%= yield %>
+</br>
 </td></tr></table>
-
 </body>
 </html>

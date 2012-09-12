@@ -1,10 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+</br>
+<table class="gradientBoxesWithOuterShadows" cellspacing=3 cellpadding=3 width=400 align=center><tr><td class="form_field">
+  	Name:
+</td><td align=right class="form_field">
+    <%= @product.name %>
+</td></tr><tr><td class="form_field">
+    Size:
+</td><td align=right class="form_field">
+    <%= @product.size %>
+</td></tr><tr><td class="form_field">
+    PPD Code:
+</td><td align=right class="form_field">
+    <%= @product.ppd_code %>
+</td></tr><tr><td class="form_field">
+    Supplier Code:
+</td><td align=right class="form_field">
+    <%= @product.supplier_code %>
+</td></tr><tr><td class="form_field">
+    Minimum Stock:
+</td><td align=right class="form_field">
+    <%= @product.min_quantity %>
+</td></tr></table>
+</br>
+<table align=center class="bordered subtopic" width=400>
+  <tr>
+    <th>Storage</th>
+    <th>Amount</th>
+  </tr>
+<% @product.quantities.each do |quantity| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= Storage.find(quantity.storage).name %></td>
+    <td><%= quantity.amount %></td>
+  </tr>
+<% end %>
+</table>

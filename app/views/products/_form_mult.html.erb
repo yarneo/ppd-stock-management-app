@@ -1,11 +1,24 @@
 <table class="gradientBoxesWithOuterShadows" border=0 width=400 cellspacing=3 cellpadding=3 align=center><tr><td class="form_field">
-  <%= f.label :name, "Name" %><br />
+  <%= f.label :name, "Name" %>
 </td><td align=right>
-   <%= f.autocomplete_field :name, autocomplete_product_name_products_path %>
-</td></tr><tr>
+   <%= f.select :name, options_from_collection_for_select(Product.all, "id", "full_name"),{:include_blank => true} ,
+   {:'data-placeholder'=>"Choose a product name", :class=>"chzn-select", :style=>"display:none; width:350px;"} %>
+</td></tr><tr><td>OR</td></tr>
+<tr><td class="form_field">
+  <%= f.label :supplier_code, "Supplier Code" %>
+</td><td align=right>
+   <%= f.select :supplier_code, options_from_collection_for_select(Product.all, "id", "supplier_code"),{:include_blank => true} ,
+   {:'data-placeholder'=>"Choose a supplier code", :class=>"chzn-select", :style=>"display:none; width:350px;"} %>
+   </td></tr><tr><td>OR</td></tr>
+</td></tr><tr><td class="form_field">
+<%= f.label :ppd_code, "PPD Code" %>
+</td><td align=right>
+   <%= f.select :ppd_code, options_from_collection_for_select(Product.all, "id", "ppd_code"),{:include_blank => true} ,
+   {:'data-placeholder'=>"Choose a PPD code", :class=>"chzn-select", :style=>"display:none; width:350px;"} %></br></br>
+</td></tr>
 <%= f.fields_for :quantities do |builder| %>
       <%= render :partial => 'quantities/form',
              :locals => {:form => f} %>
-</tr></table><hr>
+</table><hr>
 <% end %>
 

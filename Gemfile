@@ -26,6 +26,8 @@ gem "bcrypt-ruby", :require => "bcrypt"
 
 gem 'jquery-rails'
 
+gem 'chosen-rails'
+gem 'client_side_validations'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

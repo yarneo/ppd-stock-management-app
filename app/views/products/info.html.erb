@@ -1,0 +1,54 @@
+<div class="headline">&nbsp;Products</div>
+</br>
+<table align=center class="bordered subtopic pretty" width=700>
+  <tr>
+    <th><%= sortable2 "name", "Name" %></th>
+    <th><%= sortable2 "size", "Size" %></th>
+    <th><%= sortable2 "ppd_code", "PPD Code" %></th>
+    <th><%= sortable2 "supplier_code", "Supplier Code" %></th>
+    <th>Minimum Quantity</th>  
+    <th>Total Amount (Exc. Package Room)</th>    
+    <th>More Info</th>  
+    <th>Action</th>    
+  </tr>
+<% @bad_items.each do |product| %>
+  <tr bgcolor=red style="color:black">
+    <td><%= product.name %></td>
+    <td><%= product.size %></td>
+    <td><%= product.ppd_code %></td>
+    <td><%= product.supplier_code %></td>
+    <td><%= product.min_quantity %></td>    
+    <% @tot_amount = 0 %>
+    <% product.quantities.each do |quantity| %>
+    <% if Storage.find(quantity.storage).name.downcase != "packing room" %>
+    <% @tot_amount += quantity.amount %>
+    <% end %>
+    <% end %>
+    <td><%= @tot_amount %></td>
+    <td><%= link_to 'Show', product %></td>
+    <td><%= link_to 'Edit', edit_product_path(product) %>
+      <%= link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' } %>&nbsp;
+      </td>
+  </tr>
+<% end %>
+<% @good_items.each do |product| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= product.name %></td>
+    <td><%= product.size %></td>
+    <td><%= product.ppd_code %></td>
+    <td><%= product.supplier_code %></td>
+    <td><%= product.min_quantity == -1 ? "Not Important" : product.min_quantity %></td>
+    <% @tot_amount = 0 %>
+    <% product.quantities.each do |quantity| %>
+    <% if Storage.find(quantity.storage).name.downcase != "packing room" %>
+    <% @tot_amount += quantity.amount %>
+    <% end %>
+    <% end %>
+    <td><%= @tot_amount %></td>
+    <td><%= link_to 'Show', product %></td>
+    <td><%= link_to 'Edit', edit_product_path(product) %>
+      <%= link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' } %>&nbsp;
+      </td>
+  </tr>
+<% end %>
+</table>

@@ -1,10 +1,13 @@
 <%= form.fields_for :quantities do |quant| %>
+<tr>
 <td class="form_field">
-    <%= quant.label :storage %><br />
+    <%= quant.label :storage %>
 </td><td align=right>
-    <%= quant.select :storage, options_from_collection_for_select(@storages, "id", "name", params[:storage])%>
+    <%= #quant.select :storage, options_from_collection_for_select(@storages, "id", "name", params[:storage])
+		quant.select :storage, Storage.find(:all).collect {|p| [ p.name, p.id ] }
+    %>
 </td></tr><tr><td class="form_field">
-    <%= quant.label :amount %><br />
+    <%= quant.label :amount %>
 </td><td align=right>
     <%= quant.number_field :amount %>
  <% unless quant.object.nil? || quant.object.new_record? %>
@@ -13,7 +16,7 @@
       </td><td align=right>
       <%= quant.check_box :_destroy %>
 </td>
-
+</tr>
 <% end %>
 <% end %>
 
