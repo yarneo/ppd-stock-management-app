@@ -72,7 +72,7 @@ def move
       redirect_to products_pre_move_path, :notice => "One of the Storages you inputted doesn't exist!"
       return
     end
-    @quantities = Quantity.where(:storage => params[:from_storage])
+    @quantities = Quantity.joins(:product).where(:storage => params[:from_storage]).order("products.name")
    # @quantities.sort! { |a,b| a.product.name <=> b.product.name }
     respond_to do |format|
       format.html
@@ -151,7 +151,7 @@ end
 def remove
   @from_storage = params[:from_storage]
 
-  @quantities = Quantity.where(:storage => params[:from_storage])
+  @quantities = Quantity.joins(:product).where(:storage => params[:from_storage]).order("products.name")
   #@quantities.sort! { |a,b| a.product.name <=> b.product.name }
   respond_to do |format|
     format.html
