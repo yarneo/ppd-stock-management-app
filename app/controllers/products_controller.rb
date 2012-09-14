@@ -73,7 +73,7 @@ def move
       return
     end
     @quantities = Quantity.where(:storage => params[:from_storage])
-    @quantities.sort! { |a,b| a.product.name <=> b.product.name }
+   # @quantities.sort! { |a,b| a.product.name <=> b.product.name }
     respond_to do |format|
       format.html
       format.json { render :json => @products }
@@ -152,7 +152,7 @@ def remove
   @from_storage = params[:from_storage]
 
   @quantities = Quantity.where(:storage => params[:from_storage])
-  @quantities.sort! { |a,b| a.product.name <=> b.product.name }
+  #@quantities.sort! { |a,b| a.product.name <=> b.product.name }
   respond_to do |format|
     format.html
     format.json { render :json => @products }
