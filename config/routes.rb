@@ -15,6 +15,8 @@ Dada::Application.routes.draw do
 
   match "/products/info",  :to => 'products#info'
 
+  resources :transactions
+
   resources :items
 
   resources :storages

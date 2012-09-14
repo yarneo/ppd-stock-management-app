@@ -7,16 +7,20 @@ class Product < ActiveRecord::Base
   #validates :name, :presence => true
   validates :name, :uniqueness => {:scope => :size}, :if => :name?
   validates :ppd_code, :uniqueness => true, :if => :ppd_code?
-  validates :supplier_code, :uniqueness => true, :if => :supplier_code?
+  validates :supplier_code, :uniqueness => {:scope => :size}, :if => :supplier_code?
     accepts_nested_attributes_for :quantities, :allow_destroy => :true,
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
 def self.search(search)
   if search
   	@search_out = Array.new
-    @mrmr = find(:all, :conditions => ['name LIKE ? or supplier_code LIKE ? or ppd_code LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%"])
-    @mrmr.each do |element| 
-    	element.quantities.each do |quants|
+    @arr = search.split(' ')
+    @arr.collect! {|x| x + "%" }
+    search = @arr.join
+    logger.info search.inspect
+    @prod_out = find(:all, :conditions => ['concat(name , size) ILIKE ? or supplier_code ILIKE ? or ppd_code ILIKE ?', "%#{search}%", "%#{search}%", "%#{search}%"])
+    @prod_out.each do |prod| 
+    	prod.quantities.each do |quants|
     		@search_out << quants
     	end
     end

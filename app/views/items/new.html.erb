@@ -20,6 +20,14 @@
           <%= render :partial => 'products/form_mult',
              :locals => {:f => builder} %>
   <% end %>
+
+<table class="gradientBoxesWithOuterShadows" border=0 width=400 cellspacing=3 cellpadding=3 align=center><tr><td class="form_field">
+  <%= label_tag :reason %>
+  </td><td align=right>
+  <%= text_area_tag :reason %>
+</td></tr></table>
+
+
   <p align=center><%= f.submit "Submit" %></p>
 <% end %>
 

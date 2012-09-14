@@ -1,0 +1,16 @@
+<div class="headline">&nbsp;Transactions</div>
+</br>
+<table align=center class="bordered subtopic" width=800>
+  <tr>
+    <th>Type</th>
+    <th>Reason</th>
+    <th>Info</th>
+  </tr>
+<% @transactions.each do |transaction| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= transaction.operationtype %></td>
+    <td><%= transaction.reason %></td>
+    <td><%= transaction.info %></td>
+  </tr>
+<% end %>
+</table>

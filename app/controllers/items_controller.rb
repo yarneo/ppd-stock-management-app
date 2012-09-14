@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
  def create
-
+    @the_params = "" 
     @item = Item.new(params[:item])
 
     respond_to do |format|
@@ -83,19 +83,22 @@ class ItemsController < ApplicationController
           #We are fucked, contact site admin
         end
         @find_prod = Product.find(:first, :conditions => ["id = ?",@right_param])
-        if @find_prod != nil         
+        if @find_prod != nil  
+          @found = 0       
           @quants = @find_prod.quantities
           #if quants is empty or nil? (added product no quants yet) will the for loop work? Update: I think its ok
           @quants.each do |q|
             if q.storage == @quants_hash[key2][:storage].to_i
               q.amount += @quants_hash[key2][:amount].to_i
               q.save!
-              redirect_to(products_path)
-              return
+              @found = 1
+              break
             end
           end
-          @new_quantity = @find_prod.quantities.build(:storage => @quants_hash[key2][:storage].to_i, :amount => @quants_hash[key2][:amount].to_i)
-          @new_quantity.save
+          if @found == 0
+            @new_quantity = @find_prod.quantities.build(:storage => @quants_hash[key2][:storage].to_i, :amount => @quants_hash[key2][:amount].to_i)
+            @new_quantity.save
+          end
         else
           #we are fucked
           We are fucked! If you have reached here please contact someone.
@@ -104,8 +107,12 @@ class ItemsController < ApplicationController
         end
           #@pp = Product.new(@prods_hash[key])
           #@pp.save
+          @the_params += "Added " + @quants_hash[key2][:amount] + " For Product: " + @find_prod.name + " " + @find_prod.size + ","
+          @the_params += " To Storage " + Storage.find(@quants_hash[key2][:storage]).name + ". "
       end
     end
+    @trans = Transaction.new(:operationtype => "Add Stock", :reason => params[:reason], :info => @the_params)
+    @trans.save
     redirect_to(products_path)
     return
       else

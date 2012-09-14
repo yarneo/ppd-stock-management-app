@@ -22,6 +22,14 @@
 </tr>
   <% end %>
   </table>
+</br>
+<table class="gradientBoxesWithOuterShadows" border=0 width=400 cellspacing=3 cellpadding=3 align=center><tr><td class="form_field">
+  <%= label_tag :reason %>
+  </td><td align=right>
+  <%= text_area_tag :reason %>
+</td></tr></table>
+</br>
+
   <%= hidden_field_tag "from_storage" , params[:from_storage].to_s %>
   <%= hidden_field_tag "to_storage" , params[:to_storage].to_s %>
  <div align=center> 

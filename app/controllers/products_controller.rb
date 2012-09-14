@@ -81,6 +81,7 @@ def move
 end
 
 def move_multiple
+    @the_params = "" 
   if params[:quantity_ids] == nil
     redirect_to products_pre_move_path, :notice => "You haven't checked any product!"
     return
@@ -121,7 +122,13 @@ def move_multiple
     end
     #quantity.update_attributes!(params[:product].reject { |k,v| v.blank? })
    #logger.info params[:quantities][quantity.id.to_s].inspect
+   @the_params += "Moved " + params[:quantities][quantity.id.to_s][:amount] + 
+   " For Product: " + quantity.product.name + " " + quantity.product.size + ", "
   end
+  @the_params += " From Storage " +  Storage.find(params[:from_storage]).name + " To Storage " + Storage.find(params[:to_storage]).name
+  @trans = Transaction.new(:operationtype => "Move Stock", :reason => params[:reason], :info => @the_params)
+  @trans.save
+
   flash[:notice] = "Moved the products!"
   redirect_to products_path
 end
@@ -142,18 +149,19 @@ def pre_remove
 end
 
 def remove
-    @from_storage = params[:from_storage]
+  @from_storage = params[:from_storage]
 
-    @quantities = Quantity.where(:storage => params[:from_storage])
-    @quantities.sort! { |a,b| a.product.name <=> b.product.name }
-    respond_to do |format|
-      format.html
-      format.json { render :json => @products }
-    end
+  @quantities = Quantity.where(:storage => params[:from_storage])
+  @quantities.sort! { |a,b| a.product.name <=> b.product.name }
+  respond_to do |format|
+    format.html
+    format.json { render :json => @products }
+  end
 end
 
 
 def remove_multiple
+  @the_params = "" 
   if params[:quantity_ids] == nil
     redirect_to products_pre_remove_path, :notice => "You haven't checked any product!"
     return
@@ -173,7 +181,12 @@ def remove_multiple
       amount_to_leave = quantity.amount - params[:quantities][quantity.id.to_s][:amount].to_i
       quantity.update_attribute(:amount, amount_to_leave)
     end
+    @the_params += "Removed " + params[:quantities][quantity.id.to_s][:amount] + 
+     " For Product: " + quantity.product.name + " " + quantity.product.size + ", "
   end
+  @the_params += " From Storage " +  Storage.find(@quantities.first.storage).name
+  @trans = Transaction.new(:operationtype => "Remove Stock", :reason => params[:reason], :info => @the_params)
+  @trans.save  
   flash[:notice] = "Removed the stock!"
   redirect_to products_path
 end

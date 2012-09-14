@@ -13,9 +13,10 @@ border-style: solid;" width=90% height=800><tr  bgcolor="#333333"><td  bgcolor="
 </td>
 <td align=center>
 <div id="user_nav">
-  <% if current_user %><font color=blue>
+  <% if current_user %>
     <div class="welcome">Welcome <%= current_user.username %></div>
-  </font>
+  </br>
+     <%=link_to "Logout", log_out_path, {:class => "logout"}%>
 
   <% end %>
 </div>
@@ -48,7 +49,8 @@ border-style: solid;" width=90% height=800><tr  bgcolor="#333333"><td  bgcolor="
     <%=link_to "Add New Product", new_product_path%></li>
    <li class="<%= "active" if params[:controller] == "storages" %>">
     <%=link_to "Storages", storages_path%></li>
-   <li>	<%=link_to "Logout", log_out_path%></li>
+   <li class="<%= "active" if params[:controller] == "transactions" %>">
+    <%=link_to "Transactions", transactions_path%></li>    
 </ul>
 </div>
 </td></tr>
