@@ -5,12 +5,14 @@
     <th>Type</th>
     <th>Reason</th>
     <th>Info</th>
+    <th>Date</th>
   </tr>
 <% @transactions.each do |transaction| %>
   <tr bgcolor=#d7e4d9>
     <td><%= transaction.operationtype %></td>
     <td><%= transaction.reason %></td>
     <td><%= transaction.info %></td>
+    <td><%= transaction.created_at %></td>
   </tr>
 <% end %>
 </table>
