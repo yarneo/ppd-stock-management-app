@@ -7,7 +7,7 @@
 		quant.select :storage, Storage.find(:all).collect {|p| [ p.name, p.id ] }
     %>
 </td></tr><tr><td class="form_field">
-    <%= quant.label :amount %>
+    <%= quant.label :amount , "Quantity"%>
 </td><td align=right>
     <%= quant.number_field :amount %>
  <% unless quant.object.nil? || quant.object.new_record? %>
