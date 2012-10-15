@@ -1,0 +1,24 @@
+
+<div class="headline">&nbsp;Sales</div>
+</br>
+<div class="headline2">Sales:   &nbsp;&nbsp;<%= @fromDate.strftime + " - " + @toDate.strftime%></div>
+<table align=center class="bordered subtopic pretty" width=400>
+  <tr>
+    <th>Name</th>
+    <th>Quantity Sold</th>    
+  </tr>
+<% 
+if @sales_search.count > 1
+@sales_search = merge(@sales_search)
+end
+@sales_search.each do |sale| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= sale.name %></td>
+    <td><%= sale.quantity %></td>
+  </tr>
+<% end %>
+</table>
+</br>
+<br /><div align=center><b>
+<%= link_to 'Back to Sales', transactions_sales_path , :class => "button"%></b>
+</div>

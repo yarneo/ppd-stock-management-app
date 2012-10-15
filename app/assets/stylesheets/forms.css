@@ -118,6 +118,19 @@ table {
 	font-weight: bold;
 }
 
+.headline2 {
+ font-family: verdana, times, Times New Roman, times-roman, georgia, serif;
+    color: #000;
+    margin: 0;
+    padding: 0px 0px 6px 0px;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+}
+
 .form_field {
  font-family: verdana, times, Times New Roman, times-roman, georgia, serif;
 	color: #333333;

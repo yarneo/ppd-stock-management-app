@@ -18,7 +18,7 @@ def self.search(search)
     @arr.collect! {|x| x + "%" }
     search = @arr.join
     logger.info search.inspect
-    @prod_out = find(:all, :conditions => ['concat(name , size) ILIKE ? or supplier_code ILIKE ? or ppd_code ILIKE ?', "%#{search}%", "%#{search}%", "%#{search}%"])
+    @prod_out = find(:all, :conditions => ['name || size ILIKE ? or supplier_code ILIKE ? or ppd_code ILIKE ?', "%#{search}%", "%#{search}%", "%#{search}%"])
     @prod_out.each do |prod| 
     	prod.quantities.each do |quants|
     		@search_out << quants
@@ -29,7 +29,6 @@ def self.search(search)
     nil
   end
 end
-
 
 def amount_filled_out
     self.quantities.each do |quant|

@@ -122,6 +122,10 @@ def move_multiple
     end
     #quantity.update_attributes!(params[:product].reject { |k,v| v.blank? })
    #logger.info params[:quantities][quantity.id.to_s].inspect
+   if Storage.find(params[:to_storage]).name.downcase == "packing room"
+     @sales = Sales.new(:name => (quantity.product.name + " " + quantity.product.size), :quantity =>  params[:quantities][quantity.id.to_s][:amount] )
+     @sales.save
+   end 
    @the_params += "Moved " + params[:quantities][quantity.id.to_s][:amount] + 
    " For Product: " + quantity.product.name + " " + quantity.product.size + ", "
   end

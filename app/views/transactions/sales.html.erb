@@ -1,0 +1,74 @@
+<div class="headline">&nbsp;Sales</div>
+</br>
+<% d = Date.today %>
+
+<%= form_tag transactions_sales_search_path, :method => 'get' do %>
+<table align=center><tr><td class="form_field">
+    From &nbsp;
+</td><td>
+    <%= datepicker_input "sal","fromDate" %>
+</td><td class="form_field">
+    To &nbsp;
+    <%= datepicker_input "sal","toDate" %>
+</td><td align=right>
+    
+    </td><td align=center>
+    <%= submit_tag "Show Sales", :name => 'submitted' %>
+</td></tr></table>
+<% end %>
+
+</br>
+<div class="headline2">Sales this Week:   &nbsp;&nbsp;<%= d.at_beginning_of_week.strftime + " - " + d.strftime%></div>
+<table align=center class="bordered subtopic pretty" width=400>
+  <tr>
+    <th>Name</th>
+    <th>Quantity Sold</th>    
+  </tr>
+<% 
+@sales_week = @sales.find(:all, :conditions => {:created_at => d.at_beginning_of_week.beginning_of_day..d.end_of_day}, :order => "name")
+if @sales_week.count > 1
+@sales_week = merge(@sales_week)
+end
+@sales_week.each do |sale| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= sale.name %></td>
+    <td><%= sale.quantity %></td>
+  </tr>
+<% end %>
+</table>
+</br>
+<div class="headline2">Sales this Month: &nbsp;&nbsp;<%= d.at_beginning_of_month.strftime + " - " + d.strftime%></div>
+<table align=center class="bordered subtopic pretty" width=400>
+  <tr>
+    <th>Name</th>
+    <th>Quantity Sold</th>    
+  </tr>
+ <% @sales_month = @sales.find(:all, :conditions => {:created_at => d.at_beginning_of_month.beginning_of_day..d.end_of_day}, :order => "name") 
+if @sales_month.count > 1
+@sales_month = merge(@sales_month)
+end
+ @sales_month.each do |sale| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= sale.name %></td>
+    <td><%= sale.quantity %></td>
+  </tr>
+<% end %>
+</table>
+</br>
+<div class="headline2">Sales this Year:   &nbsp;&nbsp;<%= d.at_beginning_of_year.strftime + " - " + d.strftime%></div>
+<table align=center class="bordered subtopic pretty" width=400>
+  <tr>
+    <th>Name</th>
+    <th>Quantity Sold</th>    
+  </tr>
+  <%@sales_year = @sales.find(:all, :conditions => {:created_at => d.at_beginning_of_year.beginning_of_day..d.end_of_day}, :order => "name")
+if @sales_year.count > 1
+@sales_year = merge(@sales_year)
+end
+ @sales_year.each do |sale| %>
+  <tr bgcolor=#d7e4d9>
+    <td><%= sale.name %></td>
+    <td><%= sale.quantity %></td>
+  </tr>
+<% end %>
+</table>

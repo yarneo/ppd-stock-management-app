@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="cache-control" content="public" />
+  <meta http-equiv="last-modified" content="Sun, 23 Sep 2012 08:00:00 GMT" />
   <title>PPD Storage Managment</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application", :media => "all"%>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -49,8 +51,10 @@ border-style: solid;" width=90% height=800><tr  bgcolor="#333333"><td  bgcolor="
     <%=link_to "Add New Product", new_product_path%></li>
    <li class="<%= "active" if params[:controller] == "storages" %>">
     <%=link_to "Storages", storages_path%></li>
-   <li class="<%= "active" if params[:controller] == "transactions" %>">
+   <li class="<%= "active" if current_page?(transactions_path) %>">
     <%=link_to "Transactions", transactions_path%></li>    
+   <li class="<%= "active" if ( current_page?(transactions_sales_path) or current_page?(transactions_sales_search_path) )  %>">
+    <%=link_to "Sales", transactions_sales_path%></li>     
 </ul>
 </div>
 </td></tr>
