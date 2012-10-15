@@ -6,7 +6,6 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'thin'
 gem 'json'
 gem 'rails3-jquery-autocomplete'
 gem 'nifty-generators'
